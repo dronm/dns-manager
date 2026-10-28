@@ -1,0 +1,18 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+if (PHP_SAPI !== 'cli') {
+	http_response_code(403);
+	exit('This program is available only from the command line.');
+}
+
+if (PHP_VERSION_ID < 80100) {
+	fwrite(STDERR, "dns-manager requires PHP 8.1 or newer.\n");
+	exit(2);
+}
+
+require __DIR__ . '/src/bootstrap.php';
+
+exit(\DnsManager\Application::run($argv, __DIR__ . '/dns-manager.json'));

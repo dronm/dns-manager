@@ -1,0 +1,18 @@
+{
+	"binaries": {
+		"nsupdate": "nsupdate",
+		"named_checkzone": "named-checkzone",
+		"dig": "dig"
+	},
+	"timeout_sec": 15,
+	"lock_timeout_sec": 5,
+	"zones": {
+		"example.org": {
+			"source_file": "zones/example.org.zone",
+			"server": "127.0.0.1",
+			"port": 53,
+			"key_file": "/etc/dns-manager/update.key",
+			"check_names": "fail"
+		}
+	}
+}

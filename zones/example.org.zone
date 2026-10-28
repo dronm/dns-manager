@@ -1,0 +1,39 @@
+; Example source for dns-manager. Adapt the names and addresses for your zone.
+; This is the application's editable inventory; BIND uses a separate live file.
+; An alias tag selects a record for enable/disable operations.
+; Disabled tagged records start with the reserved prefix ";! " at column 1.
+; All tagged records in this example are initially enabled.
+
+$ORIGIN example.org.
+$TTL 300
+
+; The source serial is a reference value. BIND manages the live zone's serial.
+@ 3600 IN SOA ns1.example.org. hostmaster.example.org. (
+	1
+	3600
+	600
+	604800
+	300
+)
+
+; Infrastructure and shared records are untagged.
+@ 3600 IN NS ns1.example.org.
+@ 3600 IN NS ns2.example.org.
+ns1 3600 IN A 192.0.2.53
+ns2 3600 IN A 192.0.2.54
+mail 300 IN A 192.0.2.25
+@ 300 IN MX 10 mail.example.org.
+@ 300 IN TXT "v=spf1 -all"
+www 60 IN CNAME example.org.
+
+; First application server: four managed records.
+@ 60 IN A 192.0.2.10 ; dm=web1
+@ 60 IN AAAA 2001:db8::10 ; dm=web1
+api 60 IN A 192.0.2.10 ; dm=web1
+api 60 IN AAAA 2001:db8::10 ; dm=web1
+
+; Second application server: four managed records.
+@ 60 IN A 192.0.2.20 ; dm=web2
+@ 60 IN AAAA 2001:db8::20 ; dm=web2
+api 60 IN A 192.0.2.20 ; dm=web2
+api 60 IN AAAA 2001:db8::20 ; dm=web2
